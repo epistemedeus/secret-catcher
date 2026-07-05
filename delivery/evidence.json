@@ -1,0 +1,61 @@
+{
+  "schema": "secret.catcher.bounty.evidence.v1",
+  "bounty": "Frantic #92 — runx skill: secret-catcher ($8)",
+  "package": {
+    "owner": "epistemedeus",
+    "name": "secret-catcher",
+    "version": "0.1.0",
+    "registry_ref": "epistemedeus/secret-catcher@sha-57996f6d5e77"
+  },
+  "artifacts": {
+    "public_url": "https://runx.ai/x/epistemedeus/secret-catcher",
+    "source_url": "https://github.com/epistemedeus/secret-catcher/tree/be0b54e2bd006fcc17f613153c5ec39d9b3b21d5",
+    "pr_url": "https://github.com/runxhq/runx/pull/236",
+    "x_yaml": "https://raw.githubusercontent.com/epistemedeus/runx/d484d2fa1784ec77be6d15176366544ff223c74a/skills/secret-catcher/X.yaml",
+    "skill_md": "https://raw.githubusercontent.com/epistemedeus/runx/d484d2fa1784ec77be6d15176366544ff223c74a/skills/secret-catcher/SKILL.md",
+    "receipt_ref": "runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee"
+  },
+  "observations": [
+    "runx CLI version: runx-cli 0.6.14 (publish, install, dogfood, and verify were all run with this binary).",
+    "Publisher owner: epistemedeus. Package name: secret-catcher (exact). Version: 0.1.0.",
+    "Registry ref: epistemedeus/secret-catcher@sha-57996f6d5e77. Public adoption page (public_url): https://runx.ai/x/epistemedeus/secret-catcher.",
+    "Source/provenance (source_url): https://github.com/epistemedeus/secret-catcher/tree/be0b54e2bd006fcc17f613153c5ec39d9b3b21d5.",
+    "Pull request against runxhq/runx (pr_url): https://github.com/runxhq/runx/pull/236. Head commit: d484d2fa1784ec77be6d15176366544ff223c74a.",
+    "Raw X.yaml from the PR head commit: https://raw.githubusercontent.com/epistemedeus/runx/d484d2fa1784ec77be6d15176366544ff223c74a/skills/secret-catcher/X.yaml.",
+    "Raw SKILL.md from the PR head commit: https://raw.githubusercontent.com/epistemedeus/runx/d484d2fa1784ec77be6d15176366544ff223c74a/skills/secret-catcher/SKILL.md.",
+    "Publish method: runx login --provider github --for publish; runx registry publish ./skills/secret-catcher/SKILL.md --registry https://api.runx.ai.",
+    "Install command: runx add epistemedeus/secret-catcher@sha-57996f6d5e77 --registry https://api.runx.ai.",
+    "Local harness (pre-publish): status=passed (3/3, 0 assertion errors), cases=[planted-secret-blocks:sealed, clean-diff-does-not-block:sealed, refuses-to-apply-redaction:failure], receipts=2.",
+    "Hosted registry harness (post-publish): green — the registry publish gate runs the hosted harness and requires a stop/error case; the refuses-to-apply-redaction case satisfies it.",
+    "Dogfood command: runx skill epistemedeus/secret-catcher@sha-57996f6d5e77 --registry https://api.runx.ai --input-json diff='<planted diff>' --input-json scan_context='{\"repo\":\"acme/api\",\"pr\":101}' --receipt-dir <dir> -j.",
+    "Dogfood receipt_ref (post-publish run of epistemedeus/secret-catcher@sha-57996f6d5e77, not a harness fixture seal): runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee.",
+    "runx verify verdict on the dogfood receipt: valid.",
+    "Block decision on the dogfood input: block=true. Finding types: [aws_access_key_id, aws_secret_access_key]. Locations: config/prod.env:2:19; config/prod.env:3:23.",
+    "Clean path: a diff whose added lines only reference credentials via environment variables and placeholders yields zero findings and block=false (harness case clean-diff-does-not-block).",
+    "No raw secret value appears in any finding, artifact, or sealed receipt: each span carries a redacted preview and a one-way SHA-256 fingerprint, and the runner fails closed otherwise.",
+    "New-user path: install with 'runx add epistemedeus/secret-catcher@sha-57996f6d5e77 --registry https://api.runx.ai', run 'runx skill epistemedeus/secret-catcher@sha-57996f6d5e77 --registry https://api.runx.ai --input-json diff='<planted diff>' --input-json scan_context='{\"repo\":\"acme/api\",\"pr\":101}' --receipt-dir <dir> -j', and verify the sealed receipt with 'runx verify --receipt receipt.json --json'. verification.json records the public key so verification needs no private context."
+  ],
+  "dogfood": {
+    "package": "epistemedeus/secret-catcher@sha-57996f6d5e77",
+    "input": "a unified diff that adds config/prod.env containing AWS's documented example access key and secret key",
+    "command": "runx skill epistemedeus/secret-catcher@sha-57996f6d5e77 --registry https://api.runx.ai --input-json diff='<planted diff>' --input-json scan_context='{\"repo\":\"acme/api\",\"pr\":101}' --receipt-dir <dir> -j",
+    "receipt_ref": "runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee",
+    "verify_verdict": "valid",
+    "block": true,
+    "harness_cases": [
+      {
+        "name": "planted-secret-blocks",
+        "status": "sealed"
+      },
+      {
+        "name": "clean-diff-does-not-block",
+        "status": "sealed"
+      },
+      {
+        "name": "refuses-to-apply-redaction",
+        "status": "failure"
+      }
+    ]
+  },
+  "runx_version": "runx-cli 0.6.14"
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "secret.catcher.bounty.verification.v1",
+  "receipt_ref": "runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee",
+  "verify_command": "runx verify --receipt receipt.json --json",
+  "verify_verdict": "valid",
+  "signature_alg": "Ed25519",
+  "issuer_kid": "epistemedeus-secret-catcher",
+  "public_key_base64": "WsDXUw1Os7UbLMG+qDfsbTAysd30qEeXfZsgNyzVFTc=",
+  "public_key_sha256": "sha256:18e9fc9d42e79bcd357619f3584aca31ae2963d313e6dcbec5b5d0a9620075af",
+  "note": "Public key only — no secret. Anyone can verify the sealed dogfood receipt with the command above."
+}

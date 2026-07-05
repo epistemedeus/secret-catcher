@@ -1,0 +1,28 @@
+{
+  "origin": {
+    "digest": "sha256:1ff4d96dfeb2fe95a6808e4bc79763860bdd4383b00c34d2ee2624541ec9aa4e",
+    "profile_digest": "sha256:5c339594c5063ab29229e44a0dd281e005fadc515c91150bb93a8b4964dc8c35",
+    "ref": "epistemedeus/secret-catcher@sha-57996f6d5e77",
+    "runner_names": [
+      "default"
+    ],
+    "skill_id": "epistemedeus/secret-catcher",
+    "source": "runx-registry",
+    "source_label": "runx registry",
+    "trust_tier": "community",
+    "version": "sha-57996f6d5e77"
+  },
+  "profile": {
+    "digest": "sha256:5c339594c5063ab29229e44a0dd281e005fadc515c91150bb93a8b4964dc8c35",
+    "document": "skill: secret-catcher\nversion: \"0.1.0\"\n\ncatalog:\n  kind: skill\n  audience: public\n  visibility: public\n  role: canonical\n\nrunx:\n  mutating: false\n  idempotency:\n    key: diff_sha256\n  scopes:\n    - diff.read\n  policy:\n    data_classification: caller_supplied_diff\n    network:\n      allowed: []\n      forbidden:\n        - any network access\n        - repository writes\n        - live content edits\n    verifier_notes:\n      - Findings are produced only from added lines in the supplied unified diff.\n      - No raw secret value appears in findings, artifacts, or the sealed receipt; each span is redacted and fingerprinted with a one-way digest.\n      - The redaction is a gated proposal for the downstream redact-pii executor; this skill edits no files and scrubs no live content.\n      - The planted-secret harness case blocks; the clean harness case emits zero findings and does not block.\n  artifacts:\n    emits:\n      - secret_catcher_result\n      - evidence_json\n      - report_md\n    wrap_as: secret_catcher_packet\n\nharness:\n  cases:\n    - name: planted-secret-blocks\n      runner: default\n      inputs:\n        diff: |\n          diff --git a/config/prod.env b/config/prod.env\n          new file mode 100644\n          --- /dev/null\n          +++ b/config/prod.env\n          @@ -0,0 +1,4 @@\n          +# production credentials (example values, not real)\n          +AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\n          +AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\n          +GITHUB_TOKEN=ghp_EXAMPLEEXAMPLEEXAMPLEEXAMPLEEXAMPLE0\n        scan_context:\n          repo: acme/api\n          pr: 42\n      expect:\n        status: sealed\n        receipt:\n          schema: runx.receipt.v1\n\n    - name: clean-diff-does-not-block\n      runner: default\n      inputs:\n        diff: |\n          diff --git a/src/config.js b/src/config.js\n          --- a/src/config.js\n          +++ b/src/config.js\n          @@ -10,2 +10,9 @@ function loadConfig() {\n             const region = 'us-east-1';\n          +  // read credentials from the environment, never hard-code them\n          +  const apiKey = process.env.API_KEY;\n          +  const dbPassword = process.env.DB_PASSWORD || 'changeme';\n          +  const token = `${AUTH_TOKEN}`;\n          +  const webhook = 'https://example.com/hooks/notify';\n          +  const sampleKey = 'your_api_key_here';\n          +  return { region, apiKey, dbPassword, token };\n           }\n        scan_context:\n          repo: acme/api\n          pr: 43\n      expect:\n        status: sealed\n        receipt:\n          schema: runx.receipt.v1\n\n    - name: refuses-to-apply-redaction\n      runner: default\n      inputs:\n        diff: |\n          diff --git a/config/prod.env b/config/prod.env\n          new file mode 100644\n          --- /dev/null\n          +++ b/config/prod.env\n          @@ -0,0 +1,1 @@\n          +AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\n        apply: true\n      expect:\n        status: failure\n\nrunners:\n  default:\n    default: true\n    type: cli-tool\n    command: /usr/bin/env\n    args:\n      - node\n      - run.mjs\n    scopes:\n      - diff.read\n    policy:\n      reads:\n        - caller-supplied unified diff\n      calls: []\n      writes:\n        - evidence.json\n        - report.md\n      disallows:\n        - network access\n        - editing files or repositories\n        - quoting raw secret values\n        - executing caller-supplied code\n    inputs:\n      diff:\n        type: string\n        required: true\n        description: Unified diff to scan. Only added lines are scanned; context and removed lines are ignored.\n      scan_context:\n        type: object\n        required: false\n        description: Optional metadata (for example repo, pr, base, head) recorded with the result.\n      diff_path:\n        type: string\n        required: false\n        description: Path to a unified diff file inside the skill directory, used when a diff is too large to pass inline.\n      apply:\n        type: boolean\n        required: false\n        description: Must be absent or false. If set, the skill refuses and stops — it never edits files; redaction is delegated to the gated redact-pii executor.\n      output_dir:\n        type: string\n        required: false\n        description: Directory inside the skill directory where evidence.json and report.md are written.\n    outputs:\n      block: boolean\n      findings: array\n      redaction_proposal: object\n      secret_catcher_result: object\n",
+    "runner_names": [
+      "default"
+    ]
+  },
+  "schema_version": "runx.skill-profile.v1",
+  "skill": {
+    "digest": "sha256:1ff4d96dfeb2fe95a6808e4bc79763860bdd4383b00c34d2ee2624541ec9aa4e",
+    "name": "secret-catcher",
+    "path": "SKILL.md"
+  }
+}
