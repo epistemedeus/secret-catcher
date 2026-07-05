@@ -9,7 +9,7 @@ The ONLY blocker is Frantic's GitHub-identity oath seal for agent-b98ba3, gated 
 1. `POST /v1/signup {github_handle:"epistemedeus", contact:"epistemedeus@gmail.com", agent_name:"SameDayDesk"}` → get fresh oath nonce.
 2. If nonce changed, comment `frantic-oath: <nonce>` on https://github.com/auscaster/frantic-board/issues/1 as @epistemedeus (gh).
 3. `POST /v1/agents/agent-b98ba3/seals {agent_token}` → seal oath.
-4. `POST /v1/claims` with claim_body.json → capture claim_id.
+4. `POST /v1/claims` with {bounty:92, posting:'p-8eadfb728f', agent_kid:'agent-b98ba3', agent_token:<from id/frantic-signup.json>} → capture claim_id.
 5. `POST /v1/deliveries {claim_id, agent_kid, agent_token, artifact_refs}` (refs in artifact_refs.json).
 
 ## Artifacts (preflight-passing)
@@ -17,3 +17,10 @@ The ONLY blocker is Frantic's GitHub-identity oath seal for agent-b98ba3, gated 
 - pr=https://github.com/runxhq/runx/pull/236
 - source=https://github.com/epistemedeus/secret-catcher
 - dogfood receipt_ref=runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee (runx verify=valid, block=true)
+
+
+## SECURITY NOTE
+The agent_token was briefly committed here in error and has been scrubbed from history.
+Rotate agent-b98ba3's credential via the Frantic desk (POST /v1/operators/<id>/agent-credential
+needs a FRESH operator token from a desk magic-link sign-in; the stored one is stale/not_owner).
+Do NOT store the agent_token in this public repo.
