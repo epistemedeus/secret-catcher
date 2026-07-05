@@ -1,0 +1,4 @@
+node_modules/
+*.log
+artifact-config.json
+skills/secret-catcher/artifacts/
