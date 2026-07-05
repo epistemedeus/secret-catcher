@@ -1,0 +1,11 @@
+[
+ "public_url=https://runx.ai/x/epistemedeus/secret-catcher@sha-57996f6d5e77",
+ "source_url=https://github.com/epistemedeus/secret-catcher/tree/be0b54e2bd006fcc17f613153c5ec39d9b3b21d5",
+ "pr_url=https://github.com/runxhq/runx/pull/236",
+ "x_yaml=https://raw.githubusercontent.com/epistemedeus/runx/d484d2fa1784ec77be6d15176366544ff223c74a/skills/secret-catcher/X.yaml",
+ "skill_md=https://raw.githubusercontent.com/epistemedeus/runx/d484d2fa1784ec77be6d15176366544ff223c74a/skills/secret-catcher/SKILL.md",
+ "evidence_json=https://raw.githubusercontent.com/epistemedeus/secret-catcher/4e16de579852c00f3a031f330824c10e93735bf9/delivery/evidence.json",
+ "verification_json=https://raw.githubusercontent.com/epistemedeus/secret-catcher/4e16de579852c00f3a031f330824c10e93735bf9/delivery/verification.json",
+ "receipt_ref=runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee",
+ "report=https://raw.githubusercontent.com/epistemedeus/secret-catcher/4e16de579852c00f3a031f330824c10e93735bf9/delivery/report.md"
+]
