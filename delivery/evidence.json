@@ -1,5 +1,6 @@
 {
   "schema": "secret.catcher.bounty.evidence.v1",
+  "summary": "secret-catcher is a published, installable runx skill (epistemedeus/secret-catcher@sha-57996f6d5e77) that scans a unified diff for credential-like spans and returns redacted findings, a gated redaction_proposal for the redact-pii executor, and a block decision — without ever quoting a raw secret. Local harness passed 3/3; the post-publish dogfood run sealed receipt runx:receipt:sha256:dde605e431d3eed9a4ac4835e293cf5c136bf87b1c875d327dcfa253b504d7ee with block=true, and runx verify returned valid.",
   "bounty": "Frantic #92 — runx skill: secret-catcher ($8)",
   "package": {
     "owner": "epistemedeus",

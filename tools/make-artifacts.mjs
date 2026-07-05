@@ -37,8 +37,15 @@ const observations = [
   `New-user path: install with '${c.install_command}', run '${c.dogfood.command}', and verify the sealed receipt with '${c.verify_command}'. verification.json records the public key so verification needs no private context.`,
 ];
 
+const summary =
+  `secret-catcher is a published, installable runx skill (${c.registry_ref}) that scans a unified diff for ` +
+  `credential-like spans and returns redacted findings, a gated redaction_proposal for the redact-pii executor, ` +
+  `and a block decision — without ever quoting a raw secret. Local harness passed ${c.harness_cases.length}/${c.harness_cases.length}; ` +
+  `the post-publish dogfood run sealed receipt ${c.dogfood.receipt_ref} with block=${c.dogfood.block}, and runx verify returned ${c.dogfood.verify_verdict}.`;
+
 const evidence = {
   schema: "secret.catcher.bounty.evidence.v1",
+  summary,
   bounty: c.bounty,
   package: { owner: c.owner, name: c.package, version: c.version, registry_ref: c.registry_ref },
   artifacts: {
@@ -66,6 +73,7 @@ fs.writeFileSync(path.join(outDir, "evidence.json"), JSON.stringify(evidence, nu
 // ---- verification.json ------------------------------------------------------
 const verification = {
   schema: "secret.catcher.bounty.verification.v1",
+  summary,
   receipt_ref: c.dogfood.receipt_ref,
   verify_command: c.verify_command,
   verify_verdict: c.dogfood.verify_verdict,
