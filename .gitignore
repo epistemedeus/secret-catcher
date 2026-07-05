@@ -2,3 +2,4 @@ node_modules/
 *.log
 artifact-config.json
 skills/secret-catcher/artifacts/
+delivery/_ready/claim_body.json
